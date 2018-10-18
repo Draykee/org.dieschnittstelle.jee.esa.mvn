@@ -55,4 +55,14 @@
 	    <filter-name>TouchpointGUIServletFilter</filter-name>
 	    <servlet-name>TouchpointGUIServlet</servlet-name>	    
 	</filter-mapping>
+
+	<!--  the filter that blocks access to the api servlet for browsers -->
+	<filter>
+		<filter-name>TouchpointServiceServletFilter</filter-name>
+		<filter-class>org.dieschnittstelle.jee.esa.ser.TouchpointServiceServletFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>TouchpointServiceServletFilter</filter-name>
+		<servlet-name>TouchpointServiceServlet</servlet-name>
+	</filter-mapping>
 </web-app>
