@@ -1,24 +1,12 @@
 package org.dieschnittstelle.jee.esa.ser.client;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Future;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.concurrent.FutureCallback;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.apache.logging.log4j.Logger;
 import org.dieschnittstelle.jee.esa.entities.crm.AbstractTouchpoint;
@@ -26,8 +14,15 @@ import org.dieschnittstelle.jee.esa.entities.crm.Address;
 import org.dieschnittstelle.jee.esa.entities.crm.StationaryTouchpoint;
 import org.dieschnittstelle.jee.esa.utils.Http;
 
-import static java.net.HttpURLConnection.HTTP_OK;
-import static org.dieschnittstelle.jee.esa.utils.Utils.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+
+import static org.dieschnittstelle.jee.esa.utils.Utils.show;
 
 public class ShowTouchpointService {
 
@@ -187,7 +182,8 @@ public class ShowTouchpointService {
      *
      * @param tp
      */
-    public void deleteTouchpoint(AbstractTouchpoint tp) {
+    public void deleteTouchpoint(AbstractTouchpoint tp)
+    {
         logger.info("deleteTouchpoint(): will delete: " + tp);
 
         createClient();
@@ -195,31 +191,31 @@ public class ShowTouchpointService {
         logger.debug("client running: {}", client.isRunning());
 
         //Create HTTP delete request
-        HttpDelete httpDelete = new HttpDelete(getURI(false)+"/"+tp.getId());
+        HttpDelete httpDelete = new HttpDelete(getURI(false)+"/"+Long.toString( tp.getId() ));
+		logger.debug("about to execute request: {}", httpDelete);
 
         //Execute HttpRequest
-        this.client.execute(httpDelete, new FutureCallback<HttpResponse>() {
-            @Override
-            public void completed(HttpResponse response) {
-                try {
-                    // once you have received a response this is necessary to be able to
-                    // use the client for subsequent requests:
-                    EntityUtils.consume(response.getEntity());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        Future<HttpResponse> responseFuture = this.client.execute( httpDelete, null );
+
+        // get the response from the Future object
+        try
+        {
+            HttpResponse response = responseFuture.get();
+            // log the status line
+            show(response.getStatusLine());
+
+            // evaluate the result using getStatusLine(), use constants in
+            // HttpStatus
+
+            if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+                /* if successful: */
+                logger.info( "deleted {]",tp );
             }
-
-            @Override
-            public void failed(Exception e) {
-
-            }
-
-            @Override
-            public void cancelled() {
-
-            }
-        });
+        }
+        catch ( InterruptedException | ExecutionException e )
+        {
+            e.printStackTrace();
+        }
 
     }
 

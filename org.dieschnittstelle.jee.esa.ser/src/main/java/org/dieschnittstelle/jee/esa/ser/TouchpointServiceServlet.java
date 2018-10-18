@@ -1,19 +1,17 @@
 package org.dieschnittstelle.jee.esa.ser;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import static org.dieschnittstelle.jee.esa.utils.Utils.*;
 
 import org.apache.http.HttpStatus;
 import org.apache.logging.log4j.Logger;
 import org.dieschnittstelle.jee.esa.entities.crm.AbstractTouchpoint;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
+import static org.dieschnittstelle.jee.esa.utils.Utils.show;
 
 public class TouchpointServiceServlet extends HttpServlet {
 
@@ -57,7 +55,7 @@ public class TouchpointServiceServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) {
-
+		logger.info("doPost()");
         // assume POST will only be used for touchpoint creation, i.e. there is
         // no need to check the uri that has been used
 
@@ -93,19 +91,23 @@ public class TouchpointServiceServlet extends HttpServlet {
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doDelete(HttpServletRequest req,
+							HttpServletResponse resp) {
+		logger.info("doDelete()");
         // call the create method on the executor and take its return value
         TouchpointCRUDExecutor exec = (TouchpointCRUDExecutor) getServletContext()
                 .getAttribute("touchpointCRUD");
 
-        String pathInfo = req.getPathInfo();
-        show(pathInfo);
+        String pathInfo = req.getPathInfo(); //returns /{id}
+        String id = pathInfo.substring(pathInfo.lastIndexOf('/')+1);
+		logger.info("about to delete touchpoint {}",id);
 
-        String id = pathInfo.substring(pathInfo.lastIndexOf('/'));
-        show(id);
+		//Delete touchpoint by id
+        if(exec.deleteTouchpoint(Long.parseLong(id)))
+            resp.setStatus(HttpStatus.SC_OK);
+        else
+            resp.setStatus(HttpStatus.SC_NOT_FOUND);
 
-        exec.deleteTouchpoint(Integer.parseInt(id));
 
-        resp.setStatus(HttpStatus.SC_OK);
     }
 }
