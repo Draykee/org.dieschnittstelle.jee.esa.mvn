@@ -14,6 +14,9 @@ public class WebAPIRoot extends Application {
 
     @Override
     public Set<Class<?>> getClasses() {
-        return new HashSet(Arrays.asList(new Class[]{TouchpointCRUDServiceImpl.class, TouchpointCRUDServiceImplAsync.class, ProductCRUDServiceImpl.class, JacksonJaxbJsonProvider.class}));
+        return new HashSet(Arrays.asList(new Class[]{TouchpointCRUDServiceImpl.class,
+                                                    TouchpointCRUDServiceImplAsync.class,
+                                                    ProductCRUDServiceImpl.class,
+                                                    JacksonJaxbJsonProvider.class}));
     }
 }
