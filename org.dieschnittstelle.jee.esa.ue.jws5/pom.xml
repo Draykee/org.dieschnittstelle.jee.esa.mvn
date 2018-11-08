@@ -31,7 +31,7 @@
                             <sourceRoot>${basedir}/target/generated-sources/jaxws</sourceRoot>
                             <wsdlOptions>
                                 <wsdlOption>
-                                    <wsdl>TODO: put here the URL of the WSDL description of the service created in JWS4</wsdl>
+                                    <wsdl>http://localhost:8080/org.dieschnittstelle.jee.esa.ue.jws4/ProductCRUDWebService?wsdl</wsdl>
                                 </wsdlOption>
                             </wsdlOptions>
                         </configuration>

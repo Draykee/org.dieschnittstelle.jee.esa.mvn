@@ -29,8 +29,9 @@
         <module>../org.dieschnittstelle.jee.esa.jws</module>
         <!-- code skeletons -->
         <module>../org.dieschnittstelle.jee.esa.ue.jws4</module>
-        <!-- this needs to be commented out as creation will fail as long as jws4 has not been realised and the server is not running
-        <module>../org.dieschnittstelle.jee.esa.ue.jws5</module> -->
+        <!-- this needs to be commented out as creation will fail as long as jws4
+         has not been realised and the server is not running -->
+        <module>../org.dieschnittstelle.jee.esa.ue.jws5</module>
     </modules>
     
 </project>

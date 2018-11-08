@@ -6,6 +6,13 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.apache.logging.log4j.Logger;
 import org.dieschnittstelle.jee.esa.entities.GenericCRUDEntity;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(namespace = "http://dieschnittstelle.org/jee/esa/entities/erp")
 /*
  * UE JRS3: entfernen Sie die Auskommentierung der Annotation
  */
