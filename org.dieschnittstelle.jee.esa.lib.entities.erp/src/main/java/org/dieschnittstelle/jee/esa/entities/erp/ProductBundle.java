@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.persistence.*;
 
+@Entity
 public class ProductBundle implements Serializable {
 
 	protected static Logger logger = org.apache.logging.log4j.LogManager.getLogger(ProductBundle.class);
@@ -17,6 +18,8 @@ public class ProductBundle implements Serializable {
 	 */
 	private static final long serialVersionUID = 1501911067906145681L;
 
+	@Id
+	@GeneratedValue
 	private long id;
 
 	private IndividualisedProductItem product;

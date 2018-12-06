@@ -10,8 +10,11 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(namespace = "http://dieschnittstelle.org/jee/esa/entities/erp")
+//Old from JRS:
+//@XmlAccessorType(XmlAccessType.FIELD)
+//@XmlType(namespace = "http://dieschnittstelle.org/jee/esa/entities/erp")
+
+@Entity //For ORM in Task EJB
 public class IndividualisedProductItem extends AbstractProduct implements Serializable {
 
 	protected static Logger logger = org.apache.logging.log4j.LogManager.getLogger(IndividualisedProductItem.class);

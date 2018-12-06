@@ -1,20 +1,10 @@
 package org.dieschnittstelle.jee.esa.entities.erp;
 
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.ManyToOne;
-import javax.persistence.PostLoad;
-import javax.persistence.PostPersist;
-import javax.persistence.PostRemove;
-import javax.persistence.PostUpdate;
-import javax.persistence.PrePersist;
-import javax.persistence.PreRemove;
-import javax.persistence.PreUpdate;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.apache.logging.log4j.Logger;
 
-//@Entity
+@Entity //For ORM in Task EJB
 @Table(name = "stock")
 @IdClass(ProductAtPosPK.class)
 public class StockItem {
