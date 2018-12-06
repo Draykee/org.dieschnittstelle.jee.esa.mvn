@@ -1,10 +1,6 @@
 package org.dieschnittstelle.jee.esa.ejb.client;
 
-import org.dieschnittstelle.jee.esa.entities.crm.Address;
-import org.dieschnittstelle.jee.esa.entities.crm.Customer;
-import org.dieschnittstelle.jee.esa.entities.crm.Gender;
-import org.dieschnittstelle.jee.esa.entities.crm.MobileTouchpoint;
-import org.dieschnittstelle.jee.esa.entities.crm.StationaryTouchpoint;
+import org.dieschnittstelle.jee.esa.entities.crm.*;
 import org.dieschnittstelle.jee.esa.entities.erp.Campaign;
 import org.dieschnittstelle.jee.esa.entities.erp.IndividualisedProductItem;
 import org.dieschnittstelle.jee.esa.entities.erp.ProductBundle;
@@ -70,11 +66,13 @@ public class Constants {
 
 		PRODUCT_1 = new IndividualisedProductItem("Schrippe", ProductType.ROLL,
 				720);
-		// PRODUCT_1.setId(1);
+		//TODO: Musste für den Test mit rein..
+		PRODUCT_1.setId(1);
 
 		PRODUCT_2 = new IndividualisedProductItem("Kirschplunder",
 				ProductType.PASTRY, 1080);
-		// PRODUCT_2.setId(2);
+		//TODO: Musste für den Test mit rein..
+		PRODUCT_2.setId(2);
 
 		CAMPAIGN_1 = new Campaign();
 		// CAMPAIGN_1.setId(3);

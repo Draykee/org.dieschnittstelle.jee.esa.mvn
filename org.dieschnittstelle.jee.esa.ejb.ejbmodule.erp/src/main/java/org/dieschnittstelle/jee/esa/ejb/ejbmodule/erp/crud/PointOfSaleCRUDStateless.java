@@ -1,15 +1,12 @@
 package org.dieschnittstelle.jee.esa.ejb.ejbmodule.erp.crud;
 
-import java.util.List;
+import org.apache.logging.log4j.Logger;
+import org.dieschnittstelle.jee.esa.entities.erp.PointOfSale;
 
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
-import org.dieschnittstelle.jee.esa.entities.erp.PointOfSale;
-import org.apache.logging.log4j.Logger;
+import java.util.List;
 
 /**
  * very rudimentary implementation without any logging... 
@@ -29,7 +26,6 @@ public class PointOfSaleCRUDStateless implements PointOfSaleCRUDRemote, PointOfS
 	//@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public PointOfSale createPointOfSale(PointOfSale pos) {
 		em.persist(pos);
-
 		return pos;
 	}
 

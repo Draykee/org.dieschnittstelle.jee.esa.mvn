@@ -1,14 +1,13 @@
 package org.dieschnittstelle.jee.esa.entities.erp;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.logging.log4j.Logger;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Entity //For ORM in Task EJB
 public class Campaign extends AbstractProduct implements Serializable {
@@ -19,6 +18,10 @@ public class Campaign extends AbstractProduct implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 4407600000386810001L;
+
+	@Id	//For ORM in Task EJB
+	@GeneratedValue
+	private long id;
 
 	@OneToMany
 	private List<ProductBundle> bundles;

@@ -2,14 +2,14 @@ package org.dieschnittstelle.jee.esa.ejb.client.demos;
 
 import org.apache.logging.log4j.Logger;
 import org.dieschnittstelle.jee.esa.ejb.client.ejbclients.EJBProxyFactory;
-import org.dieschnittstelle.jee.esa.ejb.ejbmodule.crm.ShoppingException;
-import org.dieschnittstelle.jee.esa.utils.Utils;
 import org.dieschnittstelle.jee.esa.ejb.client.ejbclients.ProductCRUDClient;
 import org.dieschnittstelle.jee.esa.ejb.client.ejbclients.StockSystemClient;
 import org.dieschnittstelle.jee.esa.ejb.client.ejbclients.TouchpointAccessClient;
+import org.dieschnittstelle.jee.esa.ejb.ejbmodule.crm.ShoppingException;
+import org.dieschnittstelle.jee.esa.utils.Utils;
 
 import static org.dieschnittstelle.jee.esa.ejb.client.Constants.*;
-import static org.dieschnittstelle.jee.esa.utils.Utils.*;
+import static org.dieschnittstelle.jee.esa.utils.Utils.show;
 
 public class ShowStockSystem {
 
@@ -40,7 +40,7 @@ public class ShowStockSystem {
 			createProducts();
 			createTouchpoints();
 			createStock();
-			showStock();
+			//TODO: showStock();
 		} catch (Exception e) {
 			logger.error("got exception: " + e, e);
 		}
@@ -67,8 +67,9 @@ public class ShowStockSystem {
 		productCRUD.createProduct(PRODUCT_1);
 		Utils.step();
 		productCRUD.createProduct(PRODUCT_2);
-		productCRUD.createProduct(CAMPAIGN_1);
-		productCRUD.createProduct(CAMPAIGN_2);
+		// TODO: Campaign
+		// productCRUD.createProduct(CAMPAIGN_1);
+		//productCRUD.createProduct(CAMPAIGN_2);
 		
 		show("created products: " + PRODUCT_1 + ", " + PRODUCT_2);
 		show("all products: " + productCRUD.readAllProducts());
