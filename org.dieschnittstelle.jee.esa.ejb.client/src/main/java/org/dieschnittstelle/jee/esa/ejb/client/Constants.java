@@ -67,12 +67,12 @@ public class Constants {
 		PRODUCT_1 = new IndividualisedProductItem("Schrippe", ProductType.ROLL,
 				720);
 		//TODO: Musste für den Test mit rein..
-		PRODUCT_1.setId(1);
+		//PRODUCT_1.setId(1);
 
 		PRODUCT_2 = new IndividualisedProductItem("Kirschplunder",
 				ProductType.PASTRY, 1080);
 		//TODO: Musste für den Test mit rein..
-		PRODUCT_2.setId(2);
+		//PRODUCT_2.setId(2);
 
 		CAMPAIGN_1 = new Campaign();
 		// CAMPAIGN_1.setId(3);

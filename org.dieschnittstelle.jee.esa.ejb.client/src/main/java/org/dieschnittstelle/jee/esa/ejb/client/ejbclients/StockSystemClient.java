@@ -1,6 +1,6 @@
 package org.dieschnittstelle.jee.esa.ejb.client.ejbclients;
 
-import org.dieschnittstelle.jee.esa.ejb.ejbmodule.erp.StockSystemCRUDStateless;
+import org.dieschnittstelle.jee.esa.ejb.ejbmodule.erp.StockSystemSingleton;
 import org.dieschnittstelle.jee.esa.ejb.ejbmodule.erp.StockSystemRemote;
 import org.dieschnittstelle.jee.esa.entities.erp.IndividualisedProductItem;
 
@@ -13,8 +13,8 @@ public class StockSystemClient implements StockSystemRemote {
 	private StockSystemRemote ejbProxy;
 	
 	public StockSystemClient() throws Exception {
-		this.ejbProxy = EJBProxyFactory.getInstance().getProxy(StockSystemCRUDStateless.class,
-				"ejb:org.dieschnittstelle.jee.esa.ejb/org.dieschnittstelle.jee.esa.ejb.ejbmodule.erp/StockSystemCRUDStateless!org.dieschnittstelle.jee.esa.ejb.ejbmodule.erp.StockSystemRemote");
+		this.ejbProxy = EJBProxyFactory.getInstance().getProxy(StockSystemSingleton.class,
+				"ejb:org.dieschnittstelle.jee.esa.ejb/org.dieschnittstelle.jee.esa.ejb.ejbmodule.erp/StockSystemSingleton!org.dieschnittstelle.jee.esa.ejb.ejbmodule.erp.StockSystemRemote");
 		show("create ejb proxy %s of class %s", this.ejbProxy, this.ejbProxy.getClass());
 	}
 	

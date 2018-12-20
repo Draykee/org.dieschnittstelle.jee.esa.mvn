@@ -22,7 +22,7 @@ public class ProductCRUDClient implements ProductCRUDRemote {
     public AbstractProduct createProduct(AbstractProduct prod) {
 		AbstractProduct created = ejbProxy.createProduct(prod);
 		// as a side-effect we set the id of the created product on the argument before returning
-		//prod.setId(created.getId());
+		prod.setId(created.getId());
 		return created;
     }
 

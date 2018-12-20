@@ -3,6 +3,8 @@ package org.dieschnittstelle.jee.esa.ejb.ejbmodule.crm.crud;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -25,7 +27,7 @@ public class TouchpointCRUDStateless implements TouchpointCRUDRemote,
 	 * UE ADD1: run CreateTouchoints in the non-ws client project with the @TransactionAttribute commented in - what happens?
 	 */
 	@Override
-	//@TransactionAttribute(TransactionAttributeType.MANDATORY)
+	@TransactionAttribute(TransactionAttributeType.MANDATORY)
 	public AbstractTouchpoint createTouchpoint(AbstractTouchpoint touchpoint) throws ShoppingException {
 
 		/*

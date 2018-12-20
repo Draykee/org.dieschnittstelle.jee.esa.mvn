@@ -35,11 +35,11 @@ public class CustomerTransactionCRUDStateless implements
 		 * UE JPA1.1
 		 */
 		// persist each bundle
-//		for (ShoppingCartItem item : transaction.getItems()) {
-//			logger.info("createTransaction(): will manually persist item: " + item);
-//			em.persist(item);
-//			logger.info("createTransaction(): persisted bundle: " + item);
-//		}
+		for (ShoppingCartItem item : transaction.getItems()) {
+			logger.info("createTransaction(): will manually persist item: " + item);
+			em.persist(item);
+			logger.info("createTransaction(): persisted bundle: " + item);
+		}
 
 		// persit the transaction
 		em.persist(transaction);

@@ -19,11 +19,7 @@ public class Campaign extends AbstractProduct implements Serializable {
 	 */
 	private static final long serialVersionUID = 4407600000386810001L;
 
-	@Id	//For ORM in Task EJB
-	@GeneratedValue
-	private long id;
-
-	@OneToMany
+	@OneToMany(cascade=CascadeType.ALL) //Cascade damit neue ProductBundle persistiert werden
 	private List<ProductBundle> bundles;
 
 	public Campaign() {

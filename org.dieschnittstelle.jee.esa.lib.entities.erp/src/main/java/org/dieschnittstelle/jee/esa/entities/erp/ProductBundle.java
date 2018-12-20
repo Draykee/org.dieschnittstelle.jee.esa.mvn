@@ -22,6 +22,7 @@ public class ProductBundle implements Serializable {
 	@GeneratedValue
 	private long id;
 
+	@ManyToOne
 	private IndividualisedProductItem product;
 
 	private int units;

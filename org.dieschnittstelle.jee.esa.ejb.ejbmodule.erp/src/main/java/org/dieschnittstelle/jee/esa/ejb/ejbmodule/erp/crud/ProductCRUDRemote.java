@@ -5,6 +5,7 @@ import java.util.List;
 import org.dieschnittstelle.jee.esa.entities.erp.AbstractProduct;
 
 import javax.ejb.Remote;
+import javax.jws.WebService;
 
 /*
  * TODO JPA3:
@@ -12,6 +13,7 @@ import javax.ejb.Remote;
  * See TouchpointCRUDStateless for an example EJB with a similar scope of functionality
  */
 @Remote
+//@WebService()
 public interface ProductCRUDRemote {
 
 	public AbstractProduct createProduct(AbstractProduct prod);
