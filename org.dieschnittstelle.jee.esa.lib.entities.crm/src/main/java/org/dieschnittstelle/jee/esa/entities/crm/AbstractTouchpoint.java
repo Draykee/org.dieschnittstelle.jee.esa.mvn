@@ -49,7 +49,7 @@ import org.dieschnittstelle.jee.esa.entities.GenericCRUDEntity;
 @SequenceGenerator(name = "touchpoint_sequence", sequenceName = "touchpoint_id_sequence")
 
 // jrs/jackson annotations
-// @JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, include=JsonTypeInfo.As.PROPERTY, property="@class")
+@JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, include=JsonTypeInfo.As.PROPERTY, property="@class")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class AbstractTouchpoint implements Serializable, GenericCRUDEntity {
 

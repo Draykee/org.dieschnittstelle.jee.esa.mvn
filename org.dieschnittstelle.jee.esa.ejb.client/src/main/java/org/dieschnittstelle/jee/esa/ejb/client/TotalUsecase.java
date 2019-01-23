@@ -48,7 +48,7 @@ public class TotalUsecase {
 
 	// TODO: PAT1: set to true for testing facade
 	// TODO: ADD4: set to true for testing success-case for transactions and ShoppingException
-	private boolean useShoppingSessionFacade = false /*true*/;
+	private boolean useShoppingSessionFacade = true /*true*/;
 
 	// declare the attributes that will be instantiated with the ejb clients - note that the attributes use the remote interface types
 	private ProductCRUDRemote productCRUD;
