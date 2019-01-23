@@ -5,6 +5,7 @@ import org.dieschnittstelle.jee.esa.ejb.ejbmodule.crm.CampaignTrackingRemote;
 import org.dieschnittstelle.jee.esa.ejb.ejbmodule.crm.CustomerTrackingRemote;
 import org.dieschnittstelle.jee.esa.ejb.ejbmodule.crm.ShoppingCartRemote;
 import org.dieschnittstelle.jee.esa.ejb.ejbmodule.crm.ShoppingException;
+import org.dieschnittstelle.jee.esa.ejb.ejbmodule.erp.StockSystemRemote;
 import org.dieschnittstelle.jee.esa.ejb.ejbmodule.erp.crud.ProductCRUDRemote;
 import org.dieschnittstelle.jee.esa.entities.crm.AbstractTouchpoint;
 import org.dieschnittstelle.jee.esa.entities.crm.Customer;
@@ -12,10 +13,13 @@ import org.dieschnittstelle.jee.esa.entities.crm.CustomerTransaction;
 import org.dieschnittstelle.jee.esa.entities.crm.ShoppingCartItem;
 import org.dieschnittstelle.jee.esa.entities.erp.AbstractProduct;
 import org.dieschnittstelle.jee.esa.entities.erp.Campaign;
+import org.dieschnittstelle.jee.esa.entities.erp.IndividualisedProductItem;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * <h1>${CLASS}</h1>
@@ -26,8 +30,7 @@ import java.util.List;
  * @since 10.01.2019
  */
 @Stateful
-public class ShoppingSessionFacadeRemoteStateful implements ShoppingSessionFacadeRemote
-{
+public class ShoppingSessionFacadeRemoteStateful implements ShoppingSessionFacadeRemote {
 
     protected static Logger logger = org.apache.logging.log4j.LogManager.getLogger(ShoppingSessionFacadeRemoteStateful.class);
 
@@ -49,6 +52,9 @@ public class ShoppingSessionFacadeRemoteStateful implements ShoppingSessionFacad
      */
     @EJB
     private ProductCRUDRemote productCRUD;
+
+    @EJB
+    private StockSystemRemote stockSystem;
 
 
     /**
@@ -97,7 +103,7 @@ public class ShoppingSessionFacadeRemoteStateful implements ShoppingSessionFacad
         }
     }
 
-    public void purchase()  throws ShoppingException {
+    public void purchase() throws ShoppingException {
         logger.info("purchase()");
 
         if (this.customer == null || this.touchpoint == null) {
@@ -133,25 +139,54 @@ public class ShoppingSessionFacadeRemoteStateful implements ShoppingSessionFacad
             // Nutzen Sie dafür dessen erpProductId und die ProductCRUD EJB
 
             AbstractProduct abstractProduct = this.productCRUD.readProduct(item.getErpProductId());//??
-            item.getProductObj(); //Transient.. ??
+
 
             if (item.isCampaign()) {
                 this.campaignTracking.purchaseCampaignAtTouchpoint(item.getErpProductId(), this.touchpoint,
                         item.getUnits());
                 // TODO: wenn Sie eine Kampagne haben, muessen Sie hier
                 // 1) ueber die ProductBundle Objekte auf dem Campaign Objekt iterieren, und
-
+                Campaign campaign = (Campaign) item.getProductObj();//Transient.. ??
                 // 2) fuer jedes ProductBundle das betreffende Produkt in der auf dem Bundle angegebenen Anzahl,
-                // multipliziert mit dem Wert von item.getUnits() aus dem Warenkorb,
-                // - hinsichtlich Verfuegbarkeit ueberpruefen, und
-                // - falls verfuegbar, aus dem Warenlager entfernen - nutzen Sie dafür die StockSystem EJB
-                // (Anm.: item.getUnits() gibt Ihnen Auskunft darüber, wie oft ein Produkt, im vorliegenden Fall eine Kampagne, im
-                // Warenkorb liegt)
+                campaign.getBundles().forEach(productBundle -> {
+                    // multipliziert mit dem Wert von item.getUnits() aus dem Warenkorb,
+                    // - hinsichtlich Verfuegbarkeit ueberpruefen, und
+                    // - falls verfuegbar, aus dem Warenlager entfernen - nutzen Sie dafür die StockSystem EJB
+                    // (Anm.: item.getUnits() gibt Ihnen Auskunft darüber, wie oft ein Produkt, im vorliegenden Fall eine Kampagne, im
+                    // Warenkorb liegt)
+                    int amount = item.getUnits() * productBundle.getUnits();
+                    int unitsOnStock = this.stockSystem.getUnitsOnStock(
+                            productBundle.getProduct(),
+                            this.touchpoint.getErpPointOfSaleId()
+                    );
+
+                    if (amount <= unitsOnStock) {
+                        this.stockSystem.removeFromStock(
+                                productBundle.getProduct(),
+                                this.touchpoint.getErpPointOfSaleId(),
+                                amount
+                        );
+                    }
+
+                });
+
             } else {
                 // TODO: andernfalls (wenn keine Kampagne vorliegt) muessen Sie
                 // 1) das Produkt in der in item.getUnits() angegebenen Anzahl hinsichtlich Verfuegbarkeit ueberpruefen und
 
+                int unitsOnStock = this.stockSystem.getUnitsOnStock(
+                        (IndividualisedProductItem) item.getProductObj(),
+                        this.touchpoint.getErpPointOfSaleId()
+                );
+
                 // 2) das Produkt, falls verfuegbar, in der entsprechenden Anzahl aus dem Warenlager entfernen
+                if (item.getUnits() <= unitsOnStock) {
+                    this.stockSystem.removeFromStock(
+                            (IndividualisedProductItem) item.getProductObj(),
+                            this.touchpoint.getErpPointOfSaleId(),
+                            item.getUnits()
+                    );
+                }
             }
 
         }
