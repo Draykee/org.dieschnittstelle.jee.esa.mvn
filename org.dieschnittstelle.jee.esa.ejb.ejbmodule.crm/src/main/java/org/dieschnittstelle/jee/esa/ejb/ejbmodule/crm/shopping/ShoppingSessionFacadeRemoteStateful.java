@@ -16,10 +16,10 @@ import org.dieschnittstelle.jee.esa.entities.erp.Campaign;
 import org.dieschnittstelle.jee.esa.entities.erp.IndividualisedProductItem;
 
 import javax.ejb.EJB;
+import javax.ejb.Remote;
 import javax.ejb.Stateful;
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
 
 /**
  * <h1>${CLASS}</h1>
@@ -29,6 +29,7 @@ import static java.util.stream.Collectors.toList;
  * @version 10.01.2019
  * @since 10.01.2019
  */
+@Remote(ShoppingSessionFacadeRemote.class)
 @Stateful
 public class ShoppingSessionFacadeRemoteStateful implements ShoppingSessionFacadeRemote {
 
@@ -142,11 +143,12 @@ public class ShoppingSessionFacadeRemoteStateful implements ShoppingSessionFacad
 
 
             if (item.isCampaign()) {
+                logger.info("checkAndRemoveProductsFromStock: Found campaign item!");
                 this.campaignTracking.purchaseCampaignAtTouchpoint(item.getErpProductId(), this.touchpoint,
                         item.getUnits());
                 // TODO: wenn Sie eine Kampagne haben, muessen Sie hier
                 // 1) ueber die ProductBundle Objekte auf dem Campaign Objekt iterieren, und
-                Campaign campaign = (Campaign) item.getProductObj();//Transient.. ??
+                Campaign campaign = (Campaign) abstractProduct;//Transient.. ??
                 // 2) fuer jedes ProductBundle das betreffende Produkt in der auf dem Bundle angegebenen Anzahl,
                 campaign.getBundles().forEach(productBundle -> {
                     // multipliziert mit dem Wert von item.getUnits() aus dem Warenkorb,
@@ -159,7 +161,7 @@ public class ShoppingSessionFacadeRemoteStateful implements ShoppingSessionFacad
                             productBundle.getProduct(),
                             this.touchpoint.getErpPointOfSaleId()
                     );
-
+                    logger.info("checkAndRemoveProductsFromStock: Purchasing " + amount + "/" + unitsOnStock + " of " + productBundle);
                     if (amount <= unitsOnStock) {
                         this.stockSystem.removeFromStock(
                                 productBundle.getProduct(),
@@ -175,14 +177,14 @@ public class ShoppingSessionFacadeRemoteStateful implements ShoppingSessionFacad
                 // 1) das Produkt in der in item.getUnits() angegebenen Anzahl hinsichtlich Verfuegbarkeit ueberpruefen und
 
                 int unitsOnStock = this.stockSystem.getUnitsOnStock(
-                        (IndividualisedProductItem) item.getProductObj(),
+                        (IndividualisedProductItem) abstractProduct,
                         this.touchpoint.getErpPointOfSaleId()
                 );
-
+                logger.info("checkAndRemoveProductsFromStock: Purchasing " + item.getUnits() + "/" + unitsOnStock + " of " + item);
                 // 2) das Produkt, falls verfuegbar, in der entsprechenden Anzahl aus dem Warenlager entfernen
                 if (item.getUnits() <= unitsOnStock) {
                     this.stockSystem.removeFromStock(
-                            (IndividualisedProductItem) item.getProductObj(),
+                            (IndividualisedProductItem) abstractProduct,
                             this.touchpoint.getErpPointOfSaleId(),
                             item.getUnits()
                     );

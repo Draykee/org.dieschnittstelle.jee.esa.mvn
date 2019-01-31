@@ -81,8 +81,8 @@ public class Customer implements Serializable {
 	/*
 	 * UE JPA1.2 
 	 */
-	@OneToMany(mappedBy="customer", fetch=FetchType.LAZY)
-	//@OneToMany(mappedBy="customer", fetch=FetchType.EAGER)
+	//@OneToMany(mappedBy="customer", fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="customer", fetch=FetchType.EAGER)
 	// we also ignore this attribute (could be commented once eager loading is active)
 	@JsonIgnore
 	private Collection<CustomerTransaction> transactions;
