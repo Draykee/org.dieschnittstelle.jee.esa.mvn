@@ -5,6 +5,7 @@ import java.util.List;
 import org.dieschnittstelle.jee.esa.entities.erp.IndividualisedProductItem;
 
 import javax.ejb.Remote;
+import javax.jws.WebService;
 
 /**
  * TODO JPA4:
@@ -12,6 +13,7 @@ import javax.ejb.Remote;
  * local interface below, comments will give some hints at how the implementation could be done
  */
 @Remote
+@WebService
 public interface StockSystemRemote {
 
 	/**

@@ -84,7 +84,7 @@ public class Customer implements Serializable {
 	//@OneToMany(mappedBy="customer", fetch=FetchType.LAZY)
 	@OneToMany(mappedBy="customer", fetch=FetchType.EAGER)
 	// we also ignore this attribute (could be commented once eager loading is active)
-	@JsonIgnore
+	//@JsonIgnore
 	private Collection<CustomerTransaction> transactions;
 	
 	public void addTouchpoint(AbstractTouchpoint touchpoint) {

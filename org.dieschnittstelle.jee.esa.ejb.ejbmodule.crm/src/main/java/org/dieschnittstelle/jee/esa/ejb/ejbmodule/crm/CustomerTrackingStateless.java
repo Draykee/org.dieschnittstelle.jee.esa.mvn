@@ -17,7 +17,7 @@ import org.apache.logging.log4j.Logger;
  * allows read/write access to a customer's shopping history
  */
 @Stateless(name="customerTrackingSystem")
-public class CustomerTrackingStateless implements CustomerTrackingRemote {
+public class CustomerTrackingStateless implements CustomerTrackingRemote, CustomerTrackingLocal {
 
 	protected static Logger logger = org.apache.logging.log4j.LogManager
 			.getLogger(CustomerTrackingStateless.class);

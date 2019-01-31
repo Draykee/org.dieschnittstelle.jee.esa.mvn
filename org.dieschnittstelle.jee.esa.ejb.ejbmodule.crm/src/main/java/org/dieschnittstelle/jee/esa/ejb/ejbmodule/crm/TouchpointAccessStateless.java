@@ -15,7 +15,9 @@ import org.dieschnittstelle.jee.esa.entities.erp.PointOfSale;
 import org.apache.logging.log4j.Logger;
 
 @Stateless
-@WebService(targetNamespace = "http://dieschnittstelle.org/jee/esa/jws", serviceName = "TouchpointAccessWebService", endpointInterface = "org.dieschnittstelle.jee.esa.ejb.ejbmodule.crm.TouchpointAccessRemote")
+@WebService(targetNamespace = "http://dieschnittstelle.org/jee/esa/jws",
+		serviceName = "TouchpointAccessWebService",
+		endpointInterface = "org.dieschnittstelle.jee.esa.ejb.ejbmodule.crm.TouchpointAccessRemote")
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
 public class TouchpointAccessStateless implements
 		TouchpointAccessRemote, TouchpointAccessLocal {

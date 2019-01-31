@@ -31,7 +31,9 @@
                             <sourceRoot>${basedir}/target/generated-sources/jaxws</sourceRoot>
                             <wsdlOptions>
                                 <wsdlOption>
-                                    <wsdl>TODO: Specify URL for ADD3</wsdl>
+                                    <wsdl>
+                                        http://localhost:8080/org.dieschnittstelle.jee.esa.ejb.ejbmodule.erp/StockSystemWebService/IStockSystemService?wsdl
+                                    </wsdl>
                                 </wsdlOption>
                             </wsdlOptions>
                         </configuration>

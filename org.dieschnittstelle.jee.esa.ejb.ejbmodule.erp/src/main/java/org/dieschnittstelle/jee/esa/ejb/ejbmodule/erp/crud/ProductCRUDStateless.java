@@ -20,7 +20,7 @@ import static org.dieschnittstelle.jee.esa.utils.Utils.show;
 //@WebService(endpointInterface = "org.dieschnittstelle.jee.esa.ejb.ejbmodule.erp.crud.ProductCRUDRemote")
 //@SOAPBinding
 //@XmlSeeAlso(IndividualisedProductItem.class)
-public class ProductCRUDStateless implements ProductCRUDRemote {
+public class ProductCRUDStateless implements ProductCRUDRemote, ProductCRUDLocal {
 
     @PersistenceContext(unitName = "erp_PU") //dependency injection for PersistenceUnit
     private EntityManager em;

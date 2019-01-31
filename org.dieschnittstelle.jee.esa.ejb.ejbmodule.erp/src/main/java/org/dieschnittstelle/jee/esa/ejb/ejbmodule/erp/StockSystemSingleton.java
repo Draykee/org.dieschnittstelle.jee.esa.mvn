@@ -10,6 +10,8 @@ import org.dieschnittstelle.jee.esa.entities.erp.StockItem;
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Singleton;
+import javax.jws.WebService;
+import javax.jws.soap.SOAPBinding;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
@@ -19,7 +21,13 @@ import static java.util.stream.Collectors.toList;
 
 @Singleton
 @Remote(StockSystemRemote.class)
-public class StockSystemSingleton implements StockSystemRemote {
+//ADD-2:
+@WebService(
+        name = "IStockSystemService",
+        serviceName = "StockSystemWebService",
+        endpointInterface = "org.dieschnittstelle.jee.esa.ejb.ejbmodule.erp.StockSystemRemote")
+@SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
+public class StockSystemSingleton implements StockSystemRemote, StockSystemLocal {
 
     protected static Logger logger = org.apache.logging.log4j.LogManager.getLogger(StockSystemSingleton.class);
 
@@ -99,5 +107,10 @@ public class StockSystemSingleton implements StockSystemRemote {
                 .mapToLong(stockItem -> stockItem.getPos().getId())
                 .boxed()
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<StockItem> getCompleteStock() {
+        throw new UnsupportedOperationException("getCompleteStock() is not implemented yet!");
     }
 }
